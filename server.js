@@ -6,9 +6,15 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static("public"));
 
-app.post("/submit-form", (req, res) => {
+const Message = require("./models/message");
+
+app.post("/submit-form", async (req, res) => {
 	const { name, email, message } = req.body;
-	console.log(`Name: ${name}, Email: ${email}, Message: ${message}`);
+
+	const newMessage = new Message({ name, email, message });
+	await newMessage.save();
+
+	console.log(`Saved a message from ${name} with email ${email}`);
 	res.send("Form submitted successfully!");
 });
 
@@ -17,9 +23,8 @@ app.listen(PORT, () => {
 });
 
 const mongoose = require("mongoose");
-
-const mongoose = require("mongoose");
-const uri = "yourMongoDBAtlasConnectionURIHere";
+const uri =
+	"mongodb+srv://dbAdmin:9pPaky0kyyLNvEii@atlascluster.tofcfip.mongodb.net/?retryWrites=true&w=majority&appName=AtlasCluster";
 
 mongoose
 	.connect(uri)
