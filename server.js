@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const express = require("express");
 const app = express();
 const PORT = 3000;
@@ -23,8 +25,7 @@ app.listen(PORT, () => {
 });
 
 const mongoose = require("mongoose");
-const uri =
-	"mongodb+srv://dbAdmin:9pPaky0kyyLNvEii@atlascluster.tofcfip.mongodb.net/?retryWrites=true&w=majority&appName=AtlasCluster";
+const uri = process.env.MONGODB_URI;
 
 mongoose
 	.connect(uri)
