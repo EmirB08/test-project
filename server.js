@@ -17,7 +17,6 @@ app.post("/submit-form", async (req, res) => {
 	await newMessage.save();
 
 	console.log(`Saved a message from ${name} with email ${email}`);
-	res.send("Form submitted successfully!");
 });
 
 app.listen(PORT, () => {
