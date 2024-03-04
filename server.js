@@ -5,13 +5,18 @@ const app = express();
 const PORT = 3000;
 
 app.use(express.urlencoded({ extended: true }));
-
 app.use(express.static("public"));
 
-app.post('/submit-form', (req, res) => {
-    const { name, message } = req.body;
-    console.log(`Message recieved: Name:${name}, Message:${message}`);
-    res.send('Thank you for your message!');
+const Message = require("./models/message");
+
+app.post("/submit-form", async (req, res) => {
+	const { name, message } = req.body;
+
+	const newMessage = new Message({ name, message });
+	await newMessage.save();
+
+	console.log(`Saved a message from ${name}`);
+	res.send("Message submitted successfully!");
 });
 
 app.listen(PORT, () => {
