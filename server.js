@@ -8,15 +8,10 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static("public"));
 
-const Message = require("./models/message");
-
-app.post("/submit-form", async (req, res) => {
-	const { name, email, message } = req.body;
-
-	const newMessage = new Message({ name, email, message });
-	await newMessage.save();
-
-	console.log(`Saved a message from ${name} with email ${email}`);
+app.post('/submit-form', (req, res) => {
+    const { name, message } = req.body;
+    console.log(`Message recieved: Name:${name}, Message:${message}`);
+    res.send('Thank you for your message!');
 });
 
 app.listen(PORT, () => {
